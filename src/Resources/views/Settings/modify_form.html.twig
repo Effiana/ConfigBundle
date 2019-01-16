@@ -4,7 +4,7 @@
 	{% for section in sections | effiana_sortSections %}
 		{% if section is not empty %}
 			<fieldset>
-				<legend>{{ section | trans({}, 'ConfigBundle') }}</legend>
+				<legend>{{ section | trans({}, 'EffianaConfigBundle') }}</legend>
 		{% endif %}
 
 		{% for setting in form.settings if setting.vars.value.section == section %}
@@ -18,5 +18,5 @@
 
 	{{ form_rest(form) }}
 
-	<button type="submit">{{ 'modify_settings' | trans({}, 'ConfigBundle') }}</button>
+	<button type="submit">{{ 'modify_settings' | trans({}, 'EffianaConfigBundle') }}</button>
 {{ form_end(form) }}

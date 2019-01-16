@@ -38,11 +38,10 @@ class EffianaConfigBundleInstaller implements Installation
     public function up(Schema $schema, QueryBag $queries)
     {
         if(!$schema->hasTable('effiana_config_setting')) {
-            $table = $schema->createTable('test_installation_table');
+            $table = $schema->createTable('effiana_config_setting');
             $table->addColumn('name', Column::STRING, ['length' => 255]);
             $table->addColumn('section', Column::STRING, ['length' => 255]);
             $table->addColumn('value', Column::STRING, ['length' => 255, 'notnull' => false]);
-            $table->addColumn('name', Column::STRING);
             $table->setPrimaryKey(['name']);
         }
 

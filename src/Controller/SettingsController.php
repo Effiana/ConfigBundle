@@ -41,7 +41,7 @@ class SettingsController extends AbstractController {
 				$em->flush();
 
 				$this->get('session')->getFlashBag()->set('notice',
-						$this->get('translator')->trans('settings_changed', [], 'ConfigBundle'));
+						$this->get('translator')->trans('settings_changed', [], 'EffianaConfigBundle'));
 				return $this->redirect($this->generateUrl($this->container->getParameter('effiana_config.redirectRouteAfterModify')));
 			}
 		}

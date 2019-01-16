@@ -31,7 +31,7 @@ class SettingType extends AbstractType {
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 		$builder->add('value', null, [
 			'required' => false,
-			'translation_domain' => 'ConfigBundle',
+			'translation_domain' => 'EffianaConfigBundle',
 		]);
 	}
 
