@@ -26,7 +26,7 @@ in a shell.
 public function registerBundles() {
 	$bundles = [
 		// ...
-		new Effiana\ConfigBundle\ConfigBundle(),
+		new Effiana\ConfigBundle\EffianaConfigBundle(),
 	];
 	// ...
 }
@@ -58,7 +58,7 @@ You can either import the default routing configuration
 ```yaml
 # in app/config/routing.yml
 effiana_config_settings:
-  resource: "@ConfigBundle/Resources/config/routing/settings.xml"
+  resource: "@EffianaConfigBundle/Resources/config/routing/settings.xml"
   prefix: /settings
 ```
 

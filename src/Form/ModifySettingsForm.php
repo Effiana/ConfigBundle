@@ -20,6 +20,8 @@ class ModifySettingsForm extends AbstractType {
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 		$builder->add('settings', CollectionType::class, [
 			'entry_type' => SettingType::class,
+            'allow_add' => true,
+            'allow_delete' => true
 		]);
 	}
 

@@ -4,6 +4,10 @@ namespace Effiana\ConfigBundle\Form\Type;
 
 use Effiana\ConfigBundle\Entity\SettingInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -21,28 +25,67 @@ class SettingType extends AbstractType {
 	 */
 	protected $entityName;
 
-	public function __construct($entityName) {
+    /**
+     * SettingType constructor.
+     * @param $entityName
+     */
+	public function __construct($entityName)
+    {
 		$this->entityName = $entityName;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function buildForm(FormBuilderInterface $builder, array $options) {
-		$builder->add('value', null, [
-			'required' => false,
-			'translation_domain' => 'EffianaConfigBundle',
-		]);
+	public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+	    if($options['data']->getName() === null) {
+            $builder
+                ->add('name', null, ['required' => true])
+                ->add('type', ChoiceType::class, [
+                    'required' => true,
+                    'translation_domain' => 'EffianaConfigBundle',
+                    'choices' => [
+                        'String' => 'string',
+                        'Number' => 'int',
+                        'Boolean' => 'boolean',
+                    ]
+                ]);
+        }
+
+
+        $builder->add('value', null, [
+                'required' => true,
+                'translation_domain' => 'EffianaConfigBundle',
+            ])
+            ->add('comment', TextareaType::class, [
+                'required' => false,
+                'translation_domain' => 'EffianaConfigBundle',
+            ])
+            ->add('save', SubmitType::class, ['label' => 'Save'])
+        ;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function finishView(FormView $view, FormInterface $form, array $options) {
+	public function finishView(FormView $view, FormInterface $form, array $options)
+    {
 		/* @var $setting SettingInterface */
 		$setting = $form->getData();
 
+		$oldChilds = $view->children;
+		$childs = [];
+		if(isset($oldChilds['name'])) {
+		    $childs['name'] = $oldChilds['name'];
+		    unset($oldChilds['name']);
+        }
+        $view->children = array_merge($childs, $oldChilds);
 		$view->children['value']->vars['label'] = $setting->getName();
+
+
+
+        parent::finishView($view, $form, $options);
 	}
 
 	/**

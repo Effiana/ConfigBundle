@@ -41,7 +41,9 @@ class EffianaConfigBundleInstaller implements Installation
             $table = $schema->createTable('effiana_config_setting');
             $table->addColumn('name', Column::STRING, ['length' => 255]);
             $table->addColumn('section', Column::STRING, ['length' => 255]);
-            $table->addColumn('value', Column::STRING, ['length' => 255, 'notnull' => false]);
+            $table->addColumn('value', Column::STRING, ['length' => 255]);
+            $table->addColumn('comment', Column::TEXT, ['length' => 255, 'notnull' => false]);
+            $table->addColumn('type', Column::STRING, ['length' => 255]);
             $table->setPrimaryKey(['name']);
         }
 

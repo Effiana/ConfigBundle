@@ -1,0 +1,3 @@
+effiana_config_route:
+  resource: '../../../../src/Controller/'
+  type:     annotation

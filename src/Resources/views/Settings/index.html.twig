@@ -1,0 +1,46 @@
+{% extends '@EffianaConfig/layout.html.twig' %}
+
+{% block effiana_config_content %}
+    {% for name, section in settings %}
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ name }}</h3>
+                <div class="box-tools">
+                    <a href="{{ path('effiana_config_settings_add') }}">
+                        <button class="btn btn-default">Add</button>
+                    </a>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Value</th>
+                        <th>Comment</th>
+                        <th>Type</th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for setting in section %}
+                        <tr>
+                            <td>{{ setting.name }}</td>
+                            <td>{{ setting.value }}</td>
+                            <td>{{ setting.comment }}</td>
+                            <td>{{ setting.type }}</td>
+                            <td>
+                                <a class="btn btn-default" href="{{ path('effiana_config_settings_edit', {name: setting.name}) }}">
+                                    <span class="fa fa-edit"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

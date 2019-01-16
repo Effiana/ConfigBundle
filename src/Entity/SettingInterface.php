@@ -9,13 +9,56 @@ namespace Effiana\ConfigBundle\Entity;
  */
 interface SettingInterface {
 
-	function setName($name);
-	function getName();
+    public function getName(): ?string;
 
-	function setValue($value);
-	function getValue();
+    /**
+     * @param string $name
+     * @return SettingInterface
+     */
+    public function setName(string $name): SettingInterface;
 
-	function setSection($section);
-	function getSection();
+    /**
+     * @return null|string
+     */
+    public function getValue();
+
+    /**
+     * @param null|string $value
+     * @return SettingInterface
+     */
+    public function setValue(string $value): SettingInterface;
+
+    /**
+     * @return null|string
+     */
+    public function getSection(): string;
+
+    /**
+     * @param null|string $section
+     * @return SettingInterface
+     */
+    public function setSection(string $section): SettingInterface;
+
+    /**
+     * @return null|string
+     */
+    public function getType(): ?string;
+
+    /**
+     * @param null|string $type
+     * @return SettingInterface
+     */
+    public function setType(string $type): SettingInterface;
+
+    /**
+     * @return null|string
+     */
+    public function getComment(): ?string;
+
+    /**
+     * @param null|string $comment
+     * @return SettingInterface
+     */
+    public function setComment(string $comment): SettingInterface;
 
 }

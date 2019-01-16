@@ -1,5 +1,6 @@
 {% extends '@EffianaConfig/layout.html.twig' %}
 
 {% block effiana_config_content %}
-	{% include '@EffianaConfig/Settings/modify_content.html.twig' %}
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+    {{ form(form) }}
 {% endblock %}
