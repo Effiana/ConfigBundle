@@ -16,7 +16,8 @@
 	"require": {
 		"php": "~7.0",
 		"doctrine/doctrine-bundle": "^1.5.1",
-		"symfony/framework-bundle": "~3.4|~4.1"
+		"symfony/framework-bundle": "~3.4|~4.1",
+		"effiana/migration-bundle": "dev-master"
 	},
 	"require-dev": {
 		"doctrine/doctrine-cache-bundle": "^1.3.5",
