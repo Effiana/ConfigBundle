@@ -7,7 +7,7 @@
 		failOnRisky="true"
 		failOnWarning="true">
 	<testsuites>
-		<testsuite name="CraueConfigBundle">
+		<testsuite name="ConfigBundle">
 			<directory suffix="Test.php">Tests</directory>
 		</testsuite>
 	</testsuites>

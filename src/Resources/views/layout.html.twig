@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		{% block stylesheets %}
+			<link type="text/css" rel="stylesheet" href="{{ asset('/bundles/effianaconfig/css/form.css') }}" />
+		{% endblock %}
+	</head>
+	<body>
+		{% for type, flashMessages in app.session.flashbag.all() %}
+			{% for flashMessage in flashMessages %}
+				<div class="{{ type }}">
+					{{- flashMessage -}}
+				</div>
+			{% endfor %}
+		{% endfor %}
+
+		{% block effiana_config_content %}
+		{% endblock %}
+	</body>
+</html>

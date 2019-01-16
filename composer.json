@@ -1,9 +1,7 @@
 {
-	"name": "craue/config-bundle",
+	"name": "effiana/config-bundle",
 	"type": "symfony-bundle",
 	"description": "Database-stored settings made available via a service for your Symfony project.",
-	"keywords": ["config", "symfony3", "symfony4"],
-	"homepage": "https://github.com/craue/CraueConfigBundle",
 	"license": "MIT",
 	"authors": [
 		{
@@ -12,7 +10,7 @@
 		},
 		{
 			"name": "Symfony Community",
-			"homepage": "https://github.com/craue/CraueConfigBundle/contributors"
+			"homepage": "https://github.com/effiana/ConfigBundle/contributors"
 		}
 	],
 	"require": {
@@ -31,7 +29,7 @@
 	"minimum-stability": "stable",
 	"autoload": {
 		"psr-4": {
-			"Craue\\ConfigBundle\\": ""
+			"Effiana\\ConfigBundle\\": "src/"
 		},
 		"exclude-from-classmap": [
 			"/Tests/"

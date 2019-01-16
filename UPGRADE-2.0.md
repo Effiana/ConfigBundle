@@ -2,7 +2,7 @@
 
 ## Database
 
-After upgrading the bundle, you should migrate your database to remove the useless `UNIQUE` index for field `name` from table `craue_config_setting`. The `PRIMARY` index for field `name` will remain.
+After upgrading the bundle, you should migrate your database to remove the useless `UNIQUE` index for field `name` from table `effiana_config_setting`. The `PRIMARY` index for field `name` will remain.
 
 ## Built-in form/template
 
@@ -26,5 +26,5 @@ After upgrading the bundle, you should migrate your database to remove the usele
 
 ## Services
 
-- If you've used the DI parameter `craue_config.configTemplate.class`, you now need to override the Twig extension with service id `twig.extension.craue_config_template` instead.
-- If you've used the DI parameter `craue_config.config.class`, you now need to override the service with id `craue_config` instead.
+- If you've used the DI parameter `effiana_config.configTemplate.class`, you now need to override the Twig extension with service id `twig.extension.effiana_config_template` instead.
+- If you've used the DI parameter `effiana_config.config.class`, you now need to override the service with id `effiana_config` instead.

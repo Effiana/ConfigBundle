@@ -1,0 +1,5 @@
+imports:
+  - { resource: config.yml }
+
+parameters:
+  effiana_config.configTemplate.sectionOrder: [section3, section2, section1]

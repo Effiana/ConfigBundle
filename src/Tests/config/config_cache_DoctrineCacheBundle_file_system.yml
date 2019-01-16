@@ -1,0 +1,14 @@
+imports:
+  - { resource: config.yml }
+
+parameters:
+  effiana_config.cache_adapter.class: Effiana\ConfigBundle\CacheAdapter\DoctrineCacheBundleAdapter
+
+doctrine_cache:
+  providers:
+    effiana_config_cache:
+      file_system:
+        directory: '%kernel.cache_dir%/effiana_config'
+      namespace: effiana_config
+      aliases:
+        - effiana_config_cache_provider

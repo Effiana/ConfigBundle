@@ -1,0 +1,10 @@
+imports:
+  - { resource: config.yml }
+
+effiana_config:
+  entity_name: Effiana\ConfigBundle\Tests\IntegrationTestBundle\Entity\CustomSetting
+
+services:
+  effiana_config:
+    class: Effiana\ConfigBundle\Tests\IntegrationTestBundle\Util\CustomConfig
+    parent: effiana_config_default

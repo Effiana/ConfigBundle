@@ -1,9 +1,9 @@
 # Information
 
-[![Build Status](https://travis-ci.org/craue/CraueConfigBundle.svg?branch=master)](https://travis-ci.org/craue/CraueConfigBundle)
-[![Coverage Status](https://coveralls.io/repos/github/craue/CraueConfigBundle/badge.svg?branch=master)](https://coveralls.io/github/craue/CraueConfigBundle?branch=master)
+[![Build Status](https://travis-ci.org/effiana/ConfigBundle.svg?branch=master)](https://travis-ci.org/effiana/ConfigBundle)
+[![Coverage Status](https://coveralls.io/repos/github/effiana/ConfigBundle/badge.svg?branch=master)](https://coveralls.io/github/effiana/ConfigBundle?branch=master)
 
-CraueConfigBundle manages configuration settings stored in the database and makes them accessible via a service in your
+ConfigBundle manages configuration settings stored in the database and makes them accessible via a service in your
 Symfony project. These settings are similar to those defined in `parameters.yml` but can be modified at runtime, e.g.
 by an admin user.
 
@@ -14,7 +14,7 @@ by an admin user.
 Let Composer download and install the bundle by running
 
 ```sh
-php composer.phar require craue/config-bundle:~2.2
+php composer.phar require effiana/config-bundle:~2.2
 ```
 
 in a shell.
@@ -26,7 +26,7 @@ in a shell.
 public function registerBundles() {
 	$bundles = [
 		// ...
-		new Craue\ConfigBundle\CraueConfigBundle(),
+		new Effiana\ConfigBundle\ConfigBundle(),
 	];
 	// ...
 }
@@ -57,8 +57,8 @@ You can either import the default routing configuration
 
 ```yaml
 # in app/config/routing.yml
-craue_config_settings:
-  resource: "@CraueConfigBundle/Resources/config/routing/settings.xml"
+effiana_config_settings:
+  resource: "@ConfigBundle/Resources/config/routing/settings.xml"
   prefix: /settings
 ```
 
@@ -66,10 +66,10 @@ craue_config_settings:
 
 ```yaml
 # in app/config/routing.yml
-craue_config_settings_modify:
+effiana_config_settings_modify:
   path: /settings/modify
   defaults:
-    _controller: Craue\ConfigBundle\Controller\SettingsController::modifyAction
+    _controller: Effiana\ConfigBundle\Controller\SettingsController::modifyAction
 ```
 
 Some CSS is needed to render the form correctly. Install the assets in your project:
@@ -85,7 +85,7 @@ php bin/console assets:install --symlink web
 
 This bundle does _not_ provide functionality to create new settings because this would make no sense at runtime.
 Those settings will be used in your application and thus code needs to be written for that.
-This means that you have to create new settings in the database table `craue_config_setting` yourself, e.g. using a
+This means that you have to create new settings in the database table `effiana_config_setting` yourself, e.g. using a
 migration.
 
 ## Managing settings' values
@@ -96,22 +96,22 @@ But you probably want to limit access to this form in your security configuratio
 
 ## Reading settings
 
-The bundle provides a service called `craue_config`. Inside of a controller you can call
+The bundle provides a service called `effiana_config`. Inside of a controller you can call
 
 ```php
-$this->get('craue_config')->get('name-of-a-setting')
+$this->get('effiana_config')->get('name-of-a-setting')
 ```
 
 to retrieve the value of the setting `name-of-a-setting`. Furthermore, you can call
 
 ```php
-$this->get('craue_config')->all()
+$this->get('effiana_config')->all()
 ```
 
 to get an associative array of all defined settings and their values.
 
 ```php
-$this->get('craue_config')->getBySection('name-of-a-section')
+$this->get('effiana_config')->getBySection('name-of-a-section')
 ```
 
 will fetch only settings with the specified section (or those without a section if explicitly passing `null` for the name).
@@ -121,8 +121,8 @@ will fetch only settings with the specified section (or those without a section 
 With the same service you can set new values of settings:
 
 ```php
-$this->get('craue_config')->set('name-of-a-setting', 'new value');
-$this->get('craue_config')->setMultiple(['setting-1' => 'foo', 'setting-2' => 'bar']);
+$this->get('effiana_config')->set('name-of-a-setting', 'new value');
+$this->get('effiana_config')->setMultiple(['setting-1' => 'foo', 'setting-2' => 'bar']);
 ```
 
 Keep in mind that the setting has to be present, or an exception will be thrown.
@@ -132,7 +132,7 @@ Keep in mind that the setting has to be present, or an exception will be thrown.
 The Twig extension in this bundle supports reading settings directly in your template.
 
 ```twig
-{{ craue_setting('name-of-a-setting') }}
+{{ effiana_setting('name-of-a-setting') }}
 ```
 
 # Enable caching (optional)
@@ -143,50 +143,50 @@ implementation you'd like to use. Currently, there are adapters available for:
 - [Symfony Cache component](https://symfony.com/doc/current/components/cache.html)
 
 Refer to the documentation of each implementation for details and read on in the corresponding section below. When
-done, `CraueConfigBundle` will automatically cache settings (using the built-in `craue_config_cache_adapter` service).
+done, `ConfigBundle` will automatically cache settings (using the built-in `effiana_config_cache_adapter` service).
 
 Keep in mind to clear the cache (if needed) after modifying settings outside of your app (e.g. by Doctrine migrations):
 
 ```sh
 # in a shell
-php bin/console doctrine:cache:clear craue_config_cache
+php bin/console doctrine:cache:clear effiana_config_cache
 ```
 
 ## Cache implementation: DoctrineCacheBundle
 
-Set the parameter `craue_config.cache_adapter.class` appropriately and configure a so-called cache provider with the
-alias `craue_config_cache_provider`:
+Set the parameter `effiana_config.cache_adapter.class` appropriately and configure a so-called cache provider with the
+alias `effiana_config_cache_provider`:
 
 ```yaml
 # in app/config/config.yml
 parameters:
-  craue_config.cache_adapter.class: Craue\ConfigBundle\CacheAdapter\DoctrineCacheBundleAdapter
+  effiana_config.cache_adapter.class: Effiana\ConfigBundle\CacheAdapter\DoctrineCacheBundleAdapter
 
 doctrine_cache:
   providers:
-    craue_config_cache:
+    effiana_config_cache:
       apc: ~
-      namespace: craue_config
+      namespace: effiana_config
       aliases:
-        - craue_config_cache_provider
+        - effiana_config_cache_provider
 ```
 
 ## Cache implementation: Symfony Cache component
 
-Set the parameter `craue_config.cache_adapter.class` appropriately and configure a so-called cache pool with the
-service id `craue_config_cache_provider`:
+Set the parameter `effiana_config.cache_adapter.class` appropriately and configure a so-called cache pool with the
+service id `effiana_config_cache_provider`:
 
 ```yaml
 # in app/config/config.yml
 parameters:
-  craue_config.cache_adapter.class: Craue\ConfigBundle\CacheAdapter\SymfonyCacheComponentAdapter
+  effiana_config.cache_adapter.class: Effiana\ConfigBundle\CacheAdapter\SymfonyCacheComponentAdapter
 
 services:
-  craue_config_cache_provider:
+  effiana_config_cache_provider:
     class: Symfony\Component\Cache\Adapter\FilesystemAdapter
     public: false
     arguments:
-      - 'craue_config'
+      - 'effiana_config'
       - 0
       - '%kernel.cache_dir%'
 ```
@@ -201,7 +201,7 @@ target route name:
 ```yaml
 # in app/config/parameters.yml
 parameters:
-  craue_config.redirectRouteAfterModify: craue_config_settings_modify
+  effiana_config.redirectRouteAfterModify: effiana_config_settings_modify
 ```
 
 ## Rendering of settings in sections
@@ -212,7 +212,7 @@ name (in the database). Optionally, you can influence the order of these section
 ```yaml
 # in app/config/parameters.yml
 parameters:
-  craue_config.configTemplate.sectionOrder: [section1, section2, section3]
+  effiana_config.configTemplate.sectionOrder: [section1, section2, section3]
 ```
 
 Settings without a section will be rendered at first. Sections without explicit ordering are rendered at last.
@@ -220,13 +220,13 @@ Settings without a section will be rendered at first. Sections without explicit 
 ## Translation
 
 You can add translations for all settings (and sections) to be shown in the form by adding them to translation files
-with the `CraueConfigBundle` domain, e.g.
+with the `ConfigBundle` domain, e.g.
 
 ```yaml
-# in app/Resources/CraueConfigBundle/translations/CraueConfigBundle.en.yml
+# in app/Resources/ConfigBundle/translations/ConfigBundle.en.yml
 name-of-a-setting: name of the setting
 
-# in app/Resources/CraueConfigBundle/translations/CraueConfigBundle.de.yml
+# in app/Resources/ConfigBundle/translations/ConfigBundle.de.yml
 name-of-a-setting: Name der Einstellung
 ```
 
@@ -240,11 +240,11 @@ So create the entity and its appropriate mapping:
 
 ```php
 // src/MyCompany/MyBundle/Entity/MySetting.php
-use Craue\ConfigBundle\Entity\BaseSetting;
+use Effiana\ConfigBundle\Entity\BaseSetting;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="Craue\ConfigBundle\Repository\SettingRepository")
+ * @ORM\Entity(repositoryClass="Effiana\ConfigBundle\Repository\SettingRepository")
  * @ORM\Table(name="my_setting")
  */
 class MySetting extends BaseSetting {
@@ -276,6 +276,6 @@ And make the bundle aware of it:
 
 ```yaml
 # in app/config/config.yml
-craue_config:
+effiana_config:
   entity_name: MyCompany\MyBundle\Entity\MySetting
 ```

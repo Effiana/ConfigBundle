@@ -1,0 +1,7 @@
+.effiana_config_settings_modify label:after {
+	content: ': ';
+}
+
+.effiana_config_settings_modify input[type=text] {
+	width: 300px;
+}

@@ -1,0 +1,13 @@
+effiana_config_settings:
+  resource: '@ConfigBundle/Resources/config/routing/settings.xml'
+  prefix: /settings
+
+admin_settings_start:
+  path: /settings-start/modify
+  defaults:
+    _controller: Effiana\ConfigBundle\Controller\SettingsController::modifyAction
+
+debug_get:
+  path: /debug/get/{name}
+  defaults:
+    _controller: Effiana\ConfigBundle\Tests\IntegrationTestBundle\Controller\DebugController::getAction
