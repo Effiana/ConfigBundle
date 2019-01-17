@@ -23,9 +23,9 @@ use Twig\TwigFilter;
 class ConfigTypeExtension extends AbstractExtension
 {
     /**
-     * @return array|\Twig_Function[]
+     * @return array|\TwigFilter[]
      */
-    public function getFunctions()
+    public function getFilters()
     {
         return [
             new TwigFilter('configType', [$this, 'configType']),
@@ -40,7 +40,6 @@ class ConfigTypeExtension extends AbstractExtension
     public function configType(string $value, string $type)
     {
         settype($value, $type);
-
         switch($type) {
             case 'boolean':
             case 'bool':

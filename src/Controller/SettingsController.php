@@ -28,23 +28,23 @@ class SettingsController extends Controller
      *
      * @Route("/", name="effiana_config_settings_index")
      */
-	public function index(Request $request) {
-		/** @var EntityManager $em */
-	    $em = $this->getDoctrine()->getManager();
-		$allStoredSettings = $em->getRepository('EffianaConfigBundle:Setting')->createQueryBuilder('effianaConfig')
-        ->getQuery()->getArrayResult();
+    public function index(Request $request) {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $allStoredSettings = $em->getRepository('EffianaConfigBundle:Setting')->createQueryBuilder('effianaConfig')
+            ->getQuery()->getArrayResult();
 
-		$settingsBySection = [];
-		/** @var Setting $setting */
+        $settingsBySection = [];
+        /** @var Setting $setting */
         foreach ($allStoredSettings as $setting) {
-            $setting['value'] = settype($setting['value'], $setting['type']);
+            settype($setting['value'], $setting['type']);
             $settingsBySection[$setting['section']][] = $setting;
-		}
+        }
 
-		return $this->render('@EffianaConfig/Settings/index.html.twig', [
-			'settings' => $settingsBySection,
-		]);
-	}
+        return $this->render('@EffianaConfig/Settings/index.html.twig', [
+            'settings' => $settingsBySection,
+        ]);
+    }
 
     /**
      * @param string $name
@@ -56,7 +56,7 @@ class SettingsController extends Controller
      * @Route("/{name}/edit", name="effiana_config_settings_edit")
      * @Route("/add", name="effiana_config_settings_add")
      */
-	public function edit(?string $name, Request $request)
+    public function edit(?string $name, Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
