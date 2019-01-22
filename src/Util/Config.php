@@ -59,12 +59,12 @@ class Config {
 		$this->repo = null;
 	}
 
-	/**
-	 * @param string $name Name of the setting.
-	 * @return string|null Value of the setting.
-	 * @throws \RuntimeException If the setting is not defined.
-	 */
-	public function get($name) {
+    /**
+     * @param string $name Name of the setting.
+     * @param null $default
+     * @return string|null Value of the setting.
+     */
+	public function get($name, $default = null) {
 		if ($this->cache->has($name)) {
 			return $this->cache->get($name);
 		}
@@ -74,7 +74,10 @@ class Config {
 		]);
 
 		if ($setting === null) {
-			throw $this->createNotFoundException($name);
+		    if($default === null) {
+                throw $this->createNotFoundException($name);
+            }
+            return $default;
 		}
 
 		$this->cache->set($name, $setting->getValue());
@@ -82,11 +85,12 @@ class Config {
 		return $setting->getValue();
 	}
 
-	/**
-	 * @param string $name Name of the setting to update.
-	 * @param string|null $value New value for the setting.
-	 * @throws \RuntimeException If the setting is not defined.
-	 */
+    /**
+     * @param string $name Name of the setting to update.
+     * @param string|null $value New value for the setting.
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
 	public function set($name, $value) {
 		$setting = $this->getRepo()->findOneBy([
 			'name' => $name,
@@ -102,10 +106,11 @@ class Config {
 		$this->cache->set($name, $value);
 	}
 
-	/**
-	 * @param array $newSettings List of settings (as name => value) to update.
-	 * @throws \RuntimeException If at least one of the settings is not defined.
-	 */
+    /**
+     * @param array $newSettings List of settings (as name => value) to update.
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
 	public function setMultiple(array $newSettings) {
 		if (empty($newSettings)) {
 			return;
