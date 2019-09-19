@@ -7,6 +7,7 @@ use Effiana\ConfigBundle\CacheAdapter\CacheAdapterInterface;
 use Effiana\ConfigBundle\CacheAdapter\NullAdapter;
 use Effiana\ConfigBundle\Entity\SettingInterface;
 use Effiana\ConfigBundle\Repository\SettingRepository;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @author Christian Raue <christian.raue@gmail.com>
@@ -162,7 +163,11 @@ class Config {
 		$result = [];
 
 		foreach ($settings as $setting) {
-			$result[$setting->getName()] = $setting->getValue();
+            $value = $setting->getValue();
+            if($value instanceof File) {
+                $value = $value->getPathname();
+            }
+            $result[$setting->getName()] = $value;
 		}
 
 		return $result;
