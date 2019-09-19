@@ -28,7 +28,7 @@
                     {% for setting in section %}
                         <tr>
                             <td>{{ setting.name }}</td>
-                            <td>{{ setting.value|configType(setting.type) }}</td>
+                            <td>{{ setting.value|configType(setting.type)|raw }}</td>
                             <td>{{ setting.comment }}</td>
                             <td>{{ setting.type }}</td>
                             <td>

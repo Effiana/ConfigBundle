@@ -2,12 +2,12 @@
 
 namespace Effiana\ConfigBundle\Tests\Util;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Effiana\ConfigBundle\CacheAdapter\CacheAdapterInterface;
 use Effiana\ConfigBundle\Entity\Setting;
 use Effiana\ConfigBundle\Repository\SettingRepository;
 use Effiana\ConfigBundle\Util\Config;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub\ReturnValueMap;
 use PHPUnit\Framework\TestCase;

@@ -2,6 +2,7 @@
 
 namespace Effiana\ConfigBundle\Entity;
 
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -71,6 +72,9 @@ class Setting implements SettingInterface {
     public function getValue()
     {
         $value = $this->value;
+        if($this->type === 'file') {
+            return new File($value, false);
+        }
         if($this->type) {
             settype($value, $this->type);
         }

@@ -2,11 +2,11 @@
 
 namespace Effiana\ConfigBundle\Tests;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\SchemaTool;
 use Effiana\ConfigBundle\Entity\SettingInterface;
 use Effiana\ConfigBundle\Repository\SettingRepository;
 use Effiana\ConfigBundle\Util\Config;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

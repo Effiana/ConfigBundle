@@ -2,11 +2,11 @@
 
 namespace Effiana\ConfigBundle\Util;
 
+use Doctrine\ORM\EntityManager;
 use Effiana\ConfigBundle\CacheAdapter\CacheAdapterInterface;
 use Effiana\ConfigBundle\CacheAdapter\NullAdapter;
 use Effiana\ConfigBundle\Entity\SettingInterface;
 use Effiana\ConfigBundle\Repository\SettingRepository;
-use Doctrine\ORM\EntityManager;
 
 /**
  * @author Christian Raue <christian.raue@gmail.com>

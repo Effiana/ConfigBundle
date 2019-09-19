@@ -4,13 +4,15 @@ namespace Effiana\ConfigBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Effiana\ConfigBundle\Entity\Setting;
-use Effiana\ConfigBundle\Entity\SettingInterface;
-use Effiana\ConfigBundle\Form\ModifySettingsForm;
-use Effiana\ConfigBundle\Form\Type\SettingType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Effiana\ConfigBundle\Form\Flow\SettingsFlow;
+use Exception;
+use ManagementSystemBundle\Event\MarketFile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,7 +26,7 @@ class SettingsController extends Controller
 {
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      *
      * @Route("/", name="effiana_config_settings_index")
      */
@@ -37,7 +39,12 @@ class SettingsController extends Controller
         $settingsBySection = [];
         /** @var Setting $setting */
         foreach ($allStoredSettings as $setting) {
-            settype($setting['value'], $setting['type']);
+            if($setting['type'] === 'file') {
+                $setting['value'] = new File($setting['value'], false);
+            } else {
+                settype($setting['value'], $setting['type']);
+            }
+
             $settingsBySection[$setting['section']][] = $setting;
         }
 
@@ -50,14 +57,13 @@ class SettingsController extends Controller
      * @param string $name
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @return RedirectResponse|Response
      * @Route("/{name}/edit", name="effiana_config_settings_edit")
      * @Route("/add", name="effiana_config_settings_add")
      */
     public function edit(?string $name, Request $request)
     {
+        $flashBag = $this->get('session')->getFlashBag();
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         if($name === null) {
@@ -67,28 +73,77 @@ class SettingsController extends Controller
         }
 
         if($setting instanceof Setting) {
-            /**
-             * Form for edit workflow step.
-             */
-            $form = $this->createForm(SettingType::class, $setting);
-            $form->handleRequest($request);
-            /*
-             * Saving workflow step from form
-             */
-            if ($form->isSubmitted() && $form->isValid()) {
-                $em->persist($setting);
-                $em->flush();
 
-                return $this->redirectToRoute('effiana_config_settings_index');
+            /** @var SettingsFlow $flow */
+            $flow = $this->get(SettingsFlow::class);
+
+            $flow->bind($setting);
+            // form of the current step
+            $form = $flow->createForm();
+            if ($flow->isValid($form)) {
+
+                $flow->saveCurrentStepData($form);
+                if ($flow->nextStep()) {
+                    // form for the next step
+                    $form = $flow->createForm();
+                } else {
+                    $parameters = $request->files->all();
+                    $uploadedFile = null;
+                    if(isset($parameters['effiana_config_setting']['value']) && $parameters['effiana_config_setting']['value'] instanceof UploadedFile) {
+                        /** @var UploadedFile $uploadedFile */
+                        $uploadedFile = $parameters['effiana_config_setting']['value'];
+                        unset($parameters['effiana_config_setting']['value']);
+                    }
+                    try {
+
+                        if($uploadedFile instanceof UploadedFile) {
+                            /** @var MarketFile $event */
+                            $event = $this->get('event_dispatcher')->dispatch(
+                                new MarketFile(
+                                    $uploadedFile->getRealPath(),
+                                    $uploadedFile->getClientOriginalName()
+                                ), 'market.upload.file');
+                            $fileUrl = sprintf('%s%s',$this->container->getParameter('upload.cdn_url'), $event->getUploaderUrl());
+                            $settings = $form->getData();
+                            $settings->setValue($fileUrl);
+                        }
+
+                        $setting->setSection('MAIN');
+
+                        $em->persist($setting);
+                        $em->flush();
+
+                    } catch (Exception $ex) {
+                        $flashBag->add('error', $ex->getMessage());
+                    }
+
+                    $flow->reset(); // remove step data from the session
+
+                    return $this->redirectToRoute('effiana_config_settings_index');
+                }
             }
+//            /**
+//             * Form for edit workflow step.
+//             */
+//            $form = $this->createForm(SettingType::class, $setting);
+//            $form->handleRequest($request);
+//            /*
+//             * Saving workflow step from form
+//             */
+//            if ($form->isSubmitted() && $form->isValid()) {
+//                $em->persist($setting);
+//                $em->flush();
+//
+//                return $this->redirectToRoute('effiana_config_settings_index');
+//            }
 
             return $this->render('@EffianaConfig/Settings/form.html.twig', [
                 'form' => $form->createView(),
+                'flow' => $flow,
                 'setting' => $setting
             ]);
         }
 
         throw new NotFoundHttpException();
     }
-
 }

@@ -13,5 +13,7 @@
 			<tag name="form.type" />
 			<argument>%effiana_config.entity_name%</argument>
 		</service>
+		<service id="Effiana\ConfigBundle\Form\Flow\SettingsFlow" autoconfigure="true" public="true">
+		</service>
 	</services>
 </container>

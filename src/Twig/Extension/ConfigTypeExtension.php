@@ -39,6 +39,9 @@ class ConfigTypeExtension extends AbstractExtension
      */
     public function configType(string $value, string $type)
     {
+        if($type === 'file') {
+            return sprintf('<img src="%s" width="100" height="20"/>', $value);
+        }
         settype($value, $type);
         switch($type) {
             case 'boolean':

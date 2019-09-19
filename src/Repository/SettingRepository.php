@@ -2,8 +2,8 @@
 
 namespace Effiana\ConfigBundle\Repository;
 
-use Effiana\ConfigBundle\Entity\SettingInterface;
 use Doctrine\ORM\EntityRepository;
+use Effiana\ConfigBundle\Entity\SettingInterface;
 
 /**
  * @author Christian Raue <christian.raue@gmail.com>

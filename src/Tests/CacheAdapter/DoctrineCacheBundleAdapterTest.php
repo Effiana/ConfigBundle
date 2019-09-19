@@ -2,8 +2,8 @@
 
 namespace Effiana\ConfigBundle\Tests\CacheAdapter;
 
-use Effiana\ConfigBundle\CacheAdapter\DoctrineCacheBundleAdapter;
 use Doctrine\Common\Cache\ArrayCache;
+use Effiana\ConfigBundle\CacheAdapter\DoctrineCacheBundleAdapter;
 
 /**
  * @group unit

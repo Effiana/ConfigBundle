@@ -2,9 +2,9 @@
 
 namespace Effiana\ConfigBundle\Tests\Controller;
 
+use Doctrine\Bundle\DoctrineBundle\DataCollector\DoctrineDataCollector;
 use Effiana\ConfigBundle\Entity\Setting;
 use Effiana\ConfigBundle\Tests\IntegrationTestCase;
-use Doctrine\Bundle\DoctrineBundle\DataCollector\DoctrineDataCollector;
 use Symfony\Bundle\FrameworkBundle\Client;
 
 /**
