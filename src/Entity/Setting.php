@@ -72,8 +72,11 @@ class Setting implements SettingInterface {
     public function getValue()
     {
         $value = $this->value;
-        if($this->type === 'file' && $value !== null) {
-            return new File($value, false);
+        if($this->type === 'file') {
+            if($value !== null) {
+                return new File($value, false);
+            }
+            $this->type = 'string';
         }
         if($this->type) {
             settype($value, $this->type);
