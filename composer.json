@@ -15,7 +15,7 @@
 	],
 	"require": {
 		"php": "^7.2",
-		"doctrine/doctrine-bundle": "^*",
+		"doctrine/doctrine-bundle": "*",
 		"symfony/framework-bundle": "~4.3",
 		"effiana/migration-bundle": "dev-master",
 		"craue/formflow-bundle": "^3.2"
