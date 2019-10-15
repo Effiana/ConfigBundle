@@ -15,12 +15,13 @@
 	],
 	"require": {
 		"php": "^7.2",
-		"doctrine/doctrine-bundle": "^1.5.1",
-		"symfony/framework-bundle": "~3.4|~4.1",
+		"doctrine/doctrine-bundle": "^*",
+		"symfony/framework-bundle": "~4.3",
 		"effiana/migration-bundle": "dev-master",
 		"craue/formflow-bundle": "^3.2"
 	},
 	"require-dev": {
+		"roave/security-advisories": "dev-master",
 		"doctrine/doctrine-cache-bundle": "^1.3.5",
 		"doctrine/instantiator": "^1.0.5",
 		"doctrine/orm": "^2.5.14",
