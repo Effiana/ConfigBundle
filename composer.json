@@ -15,8 +15,8 @@
 	],
 	"require": {
 		"php": "^7.2",
-		"doctrine/doctrine-bundle": "^1.11",
-		"symfony/framework-bundle": "~4.3",
+		"doctrine/doctrine-bundle": "^1.11 | ^2.0",
+		"symfony/framework-bundle": "~4.3 | ^5.0",
 		"effiana/migration-bundle": "dev-master",
 		"craue/formflow-bundle": "^3.2"
 	},
@@ -26,8 +26,8 @@
 		"doctrine/instantiator": "^1.0.5",
 		"doctrine/orm": "^2.5.14",
 		"phpunit/phpunit": "^6.5.13|^7.5.1",
-		"symfony/phpunit-bridge": "~3.4|~4.1",
-		"symfony/symfony": "~3.4|~4.1"
+		"symfony/phpunit-bridge": "~3.4|~4.1 | ^5.0",
+		"symfony/symfony": "~3.4|~4.1 | ^5.0"
 	},
 	"minimum-stability": "stable",
 	"autoload": {
