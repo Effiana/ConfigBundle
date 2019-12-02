@@ -7,7 +7,7 @@ use Effiana\ConfigBundle\Entity\Setting;
 use Effiana\ConfigBundle\Form\Flow\SettingsFlow;
 use Exception;
 use ManagementSystemBundle\Event\MarketFile;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * @license http://opensource.org/licenses/mit-license.php MIT License
  * @Route("/")
  */
-class SettingsController extends Controller
+class SettingsController extends AbstractController
 {
     /**
      * @param Request $request
