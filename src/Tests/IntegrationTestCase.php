@@ -9,6 +9,7 @@ use Effiana\ConfigBundle\Repository\SettingRepository;
 use Effiana\ConfigBundle\Util\Config;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Twig\Environment;
 
 /**
  * @author Christian Raue <christian.raue@gmail.com>
@@ -154,9 +155,10 @@ abstract class IntegrationTestCase extends WebTestCase {
 	}
 
 	/**
-	 * @return \Twig_Environment
+	 * @return Environment
 	 */
-	protected function getTwig() {
+	protected function getTwig(): Environment
+    {
 		return $this->getService('twig');
 	}
 

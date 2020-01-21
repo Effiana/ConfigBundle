@@ -3,13 +3,16 @@
 namespace Effiana\ConfigBundle\Twig\Extension;
 
 use Effiana\ConfigBundle\Util\Config;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * @author Christian Raue <christian.raue@gmail.com>
  * @copyright 2011-2019 Christian Raue
  * @license http://opensource.org/licenses/mit-license.php MIT License
  */
-class ConfigTemplateExtension extends \Twig_Extension {
+class ConfigTemplateExtension extends AbstractExtension {
 
 	/**
 	 * @var string[]
@@ -24,39 +27,44 @@ class ConfigTemplateExtension extends \Twig_Extension {
 	/**
 	 * @param string[] $sectionOrder The order in which sections will be rendered.
 	 */
-	public function setSectionOrder(array $sectionOrder = []) {
+	public function setSectionOrder(array $sectionOrder = []): void
+    {
 		$this->sectionOrder = $sectionOrder;
 	}
 
 	/**
 	 * @param Config $config
 	 */
-	public function setConfig(Config $config) {
+	public function setConfig(Config $config): void
+    {
 		$this->config = $config;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getName() {
+	public function getName(): string
+    {
 		return 'effiana_config_template';
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getFilters() {
+	public function getFilters(): array
+    {
 		return [
-			new \Twig_SimpleFilter('effiana_sortSections', [$this, 'sortSections']),
+			new TwigFilter('effiana_sortSections', [$this, 'sortSections']),
 		];
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getFunctions() {
+	public function getFunctions(): array
+    {
 		return [
-			new \Twig_SimpleFunction('effiana_setting', [$this, 'getSetting']),
+			new TwigFunction('effiana_setting', [$this, 'getSetting']),
 		];
 	}
 
@@ -64,11 +72,12 @@ class ConfigTemplateExtension extends \Twig_Extension {
 	 * @param string[] $sections
 	 * @return string[]
 	 */
-	public function sortSections(array $sections) {
+	public function sortSections(array $sections): array
+    {
 		$finalSectionOrder = [];
 
 		// add null section first (if it exists)
-		$nullIndex = array_search(null, $sections);
+		$nullIndex = array_search(null, $sections, true);
 		if ($nullIndex !== false) {
 			$finalSectionOrder[] = $sections[$nullIndex];
 			unset($sections[$nullIndex]);
@@ -92,7 +101,8 @@ class ConfigTemplateExtension extends \Twig_Extension {
 	 * @return string|null Value of the setting.
 	 * @throws \RuntimeException If the setting is not defined.
 	 */
-	public function getSetting($name) {
+	public function getSetting($name): ?string
+    {
 		return $this->config->get($name);
 	}
 
