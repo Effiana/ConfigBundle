@@ -61,7 +61,7 @@ class SettingsController extends AbstractController
      * @Route("/{name}/edit", name="effiana_config_settings_edit")
      * @Route("/add", name="effiana_config_settings_add")
      */
-    public function edit(?string $name, Request $request)
+    public function edit(SettingsFlow $flow, ?string $name, Request $request)
     {
         $flashBag = $this->get('session')->getFlashBag();
         /** @var EntityManager $em */
@@ -73,10 +73,6 @@ class SettingsController extends AbstractController
         }
 
         if($setting instanceof Setting) {
-
-            /** @var SettingsFlow $flow */
-            $flow = $this->get(SettingsFlow::class);
-
             $flow->bind($setting);
             // form of the current step
             $form = $flow->createForm();
