@@ -18,7 +18,7 @@
 		"doctrine/doctrine-bundle": "^1.11 | ^2.0",
 		"symfony/framework-bundle": "~4.3 | ^5.0",
 		"effiana/migration-bundle": "dev-master",
-		"craue/formflow-bundle": "^3.2",
+		"effiana/formflow-bundle": "^3.2",
 		"twig/twig": "^3.0"
 	},
 	"require-dev": {
