@@ -14,7 +14,7 @@ declare(strict_types=0);
 namespace Effiana\ConfigBundle\Migrations\Data\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Effiana\ConfigBundle\Entity\Setting;
 use Effiana\MigrationBundle\Fixture\LoadedFixtureVersionAwareInterface;
 use Effiana\MigrationBundle\Fixture\VersionedFixtureInterface;
